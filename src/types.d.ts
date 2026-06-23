@@ -1,4 +1,4 @@
-type PageLanguage = "en-US" | "zh-CN";
+type PageLanguage = "en-US" | "zh-CN" | "zh-TW";
 
 type SortType = "usage" | "id";
 
