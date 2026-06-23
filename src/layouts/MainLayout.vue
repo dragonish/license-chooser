@@ -1,43 +1,65 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="hHh LpR lFr">
+    <q-header :class="$q.dark.isActive ? 'bg-secondary' : 'bg-primary'">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
         <q-toolbar-title>
-          Quasar App
+          {{ $t("app.title") }}
+          <span class="text-subtitle1">v{{ appVersion }}</span>
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <q-btn
+          dense
+          flat
+          round
+          class="cursor-pointer"
+          icon="fab fa-github"
+          target="_blank"
+          href="https://github.com/dragonish/license-chooser"
+        ></q-btn>
+
+        <q-btn-dropdown
+          flat
+          dense
+          no-caps
+          :icon="darkModeIcon"
+          :label="currentModeLabel"
+        >
+          <q-list>
+            <q-item
+              v-for="mode in darkModeOptions"
+              :key="mode.value"
+              clickable
+              v-close-popup
+              :active="configStore.darkMode === mode.value"
+              @click="configStore.darkMode = mode.value"
+            >
+              <q-item-section>{{ mode.label }}</q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+
+        <q-btn-dropdown
+          flat
+          dense
+          no-caps
+          icon="language"
+          :label="currentLangLabel"
+        >
+          <q-list>
+            <q-item
+              v-for="lang in languageOptions"
+              :key="lang.value"
+              clickable
+              v-close-popup
+              :active="currentLang === lang.value"
+              @click="switchLanguage(lang.value)"
+            >
+              <q-item-section>{{ lang.label }}</q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
       </q-toolbar>
     </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -46,57 +68,69 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import EssentialLink, { type EssentialLinkProps } from 'components/EssentialLink.vue';
+import { computed, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { Dark } from "quasar";
+import { languageOptions, getLocalLanguage } from "src/i18n/schema";
+import { useConfigStore } from "src/stores/config";
 
-const linksList: EssentialLinkProps[] = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+const appVersion = __APP_VERSION__;
+
+const route = useRoute();
+const router = useRouter();
+const configStore = useConfigStore();
+const { locale, t } = useI18n();
+
+const currentLang = computed<PageLanguage>(() => {
+  const lang = route.params.lang as PageLanguage | undefined;
+  return lang || getLocalLanguage();
+});
+
+const currentLangLabel = computed(
+  () => languageOptions.find((l) => l.value === currentLang.value)?.label,
+);
+
+const darkModeIcon = computed(() => {
+  switch (configStore.darkMode) {
+    case "dark":
+      return "dark_mode";
+    case "light":
+      return "light_mode";
+    default:
+      return "brightness_auto";
   }
-];
+});
 
-const leftDrawerOpen = ref(false);
+const darkModeOptions = computed(() => [
+  { value: "auto" as const, label: t("app.darkModeAuto") },
+  { value: "dark" as const, label: t("app.darkModeDark") },
+  { value: "light" as const, label: t("app.darkModeLight") },
+]);
 
-function toggleLeftDrawer () {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
+const currentModeLabel = computed(
+  () =>
+    darkModeOptions.value.find((l) => l.value === configStore.darkMode)?.label,
+);
+
+function switchLanguage(lang: PageLanguage) {
+  void router.push({ params: { lang } });
 }
+
+watch(
+  currentLang,
+  (lang) => {
+    locale.value = lang;
+    document.title = t("app.title");
+  },
+  { immediate: true },
+);
+
+watch(
+  () => configStore.darkMode,
+  (mode) => {
+    Dark.set(mode === "auto" ? "auto" : mode === "dark");
+  },
+  { immediate: true },
+);
 </script>
