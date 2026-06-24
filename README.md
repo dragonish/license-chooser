@@ -67,6 +67,22 @@ quasar build
 
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
 
+## Docker
+
+The easiest way to deploy is via the pre-built Docker image:
+
+```bash
+# pull
+docker pull giterhub/license-chooser:latest
+
+# run
+docker run -d \
+    --name license-chooser \
+    --restart unless-stopped \
+    -p 80:80 \
+    giterhub/license-chooser:latest
+```
+
 ## License
 
 This project is licensed under the [Open Software License 3.0 (OSL-3.0)](LICENSE).
