@@ -2,6 +2,11 @@
 
 A web application that helps developers browse, filter, compare, and download open-source software licenses.
 
+## Demo
+
+- [Site 1](https://license.dragonish.org/)
+- [Site 2](https://cucumber7748.serv00.net/)
+
 ## Features
 
 - **License Browsing** -- View 47 open-source licenses with detailed metadata including permissions, conditions, and limitations.
