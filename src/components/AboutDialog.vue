@@ -12,39 +12,26 @@
         </div>
         <div>
           <span class="text-weight-medium">{{ $t("about.projectRepo") }}:</span>
-          <a
-            href="https://github.com/dragonish/license-chooser"
-            target="_blank"
-            rel="external"
-            class="text-primary"
-          >
+          <external-a href="https://github.com/dragonish/license-chooser">
             dragonish/license-chooser
-          </a>
+          </external-a>
         </div>
         <div>
           <span class="text-weight-medium">{{ $t("about.license") }}:</span>
-          <a
+          <external-a
             href="https://github.com/dragonish/license-chooser/blob/main/LICENSE"
-            target="_blank"
-            rel="external"
-            class="text-primary"
           >
             Open Software License 3.0
-          </a>
+          </external-a>
         </div>
 
         <q-separator class="q-my-sm" />
 
         <div>
           <span class="text-weight-medium">{{ $t("about.dataFrom") }}:</span>
-          <a
-            href="https://github.com/github/choosealicense.com"
-            target="_blank"
-            rel="external"
-            class="text-primary"
-          >
+          <external-a href="https://github.com/github/choosealicense.com">
             github/choosealicense.com
-          </a>
+          </external-a>
         </div>
         <div>
           <div class="text-weight-medium q-mb-xs">
@@ -81,6 +68,7 @@
 
 <script setup lang="ts">
 import choosealicenseLicense from "assets/licenses/choosealicense.com.txt?raw";
+import ExternalA from "components/ExternalA.vue";
 
 const modelValue = defineModel<boolean>("model-value", { required: true });
 </script>

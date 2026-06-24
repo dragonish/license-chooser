@@ -10,53 +10,37 @@
 
       <div class="text-subtitle1">
         ID:
-        <a
-          class="text-primary"
-          target="_blank"
-          rel="external"
-          :href="`https://spdx.org/licenses/${item.id}.html`"
-        >
+        <external-a :href="`https://spdx.org/licenses/${item.id}.html`">
           {{ item.id }}
-        </a>
+        </external-a>
         <template v-if="item.otherId">
           <template v-for="(v, i) in item.otherId" :key="i">
             /
-            <a
-              class="text-primary"
-              target="_blank"
-              rel="external"
-              :href="`https://spdx.org/licenses/${v}.html`"
-            >
+            <external-a :href="`https://spdx.org/licenses/${v}.html`">
               {{ v }}
-            </a>
+            </external-a>
           </template>
         </template>
         <template v-if="item.variantId">
           <template v-for="(val, key) in item.variantId" :key="key">
             /
-            <a
-              class="text-primary text-italic"
-              target="_blank"
-              rel="external"
+            <external-a
               :href="`https://spdx.org/licenses/${key}.html`"
               :title="val"
             >
               {{ key }}
-            </a>
+            </external-a>
           </template>
         </template>
       </div>
 
       <div class="absolute-bottom-right text-caption text-grey q-pa-sm">
         {{ $t("app.usage") }}:
-        <a
-          class="text-primary"
-          target="_blank"
-          rel="external"
+        <external-a
           :href="`https://github.com/search?q=sort%3Astars+license%3A${item.id}&type=repositories`"
         >
           {{ item.usage > 1000 ? item.usage / 1000 + "M" : item.usage + "k" }}
-        </a>
+        </external-a>
       </div>
     </q-card-section>
 
@@ -174,6 +158,8 @@
 </template>
 
 <script setup lang="ts">
+import ExternalA from "components/ExternalA.vue";
+
 interface LicenseCardProps {
   item: LicenseItem;
 }
