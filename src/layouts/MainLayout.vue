@@ -12,9 +12,8 @@
           flat
           round
           class="cursor-pointer"
-          icon="fab fa-github"
-          target="_blank"
-          href="https://github.com/dragonish/license-chooser"
+          icon="info"
+          @click="showAbout = true"
         ></q-btn>
 
         <q-btn-dropdown
@@ -59,6 +58,8 @@
           </q-list>
         </q-btn-dropdown>
       </q-toolbar>
+
+      <about-dialog v-model="showAbout" />
     </q-header>
 
     <q-page-container>
@@ -68,12 +69,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { Dark } from "quasar";
 import { languageOptions, getLocalLanguage } from "src/i18n/schema";
 import { useConfigStore } from "src/stores/config";
+import AboutDialog from "src/components/AboutDialog.vue";
 
 const appVersion = __APP_VERSION__;
 
@@ -81,6 +83,8 @@ const route = useRoute();
 const router = useRouter();
 const configStore = useConfigStore();
 const { locale, t } = useI18n();
+
+const showAbout = ref(false);
 
 const currentLang = computed<PageLanguage>(() => {
   const lang = route.params.lang as PageLanguage | undefined;

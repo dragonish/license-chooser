@@ -156,7 +156,16 @@
     "search": "Search ID or name",
     "darkModeAuto": "Auto",
     "darkModeDark": "Dark",
-    "darkModeLight": "Light"
+    "darkModeLight": "Light",
+    "about": "About"
+  },
+  "about": {
+    "title": "About",
+    "author": "Author",
+    "projectRepo": "Project Repository",
+    "license": "License",
+    "dataFrom": "License data derived from",
+    "dataFromLicense": "License of choosealicense.com"
   },
   "form": {
     "title": "Fill in information",

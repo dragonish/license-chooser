@@ -156,7 +156,16 @@
     "search": "搜尋 ID 或名稱",
     "darkModeAuto": "自動",
     "darkModeDark": "深色",
-    "darkModeLight": "淺色"
+    "darkModeLight": "淺色",
+    "about": "關於"
+  },
+  "about": {
+    "title": "關於",
+    "author": "作者",
+    "projectRepo": "專案倉庫",
+    "license": "許可證",
+    "dataFrom": "許可證資料來源於",
+    "dataFromLicense": "choosealicense.com 的許可證"
   },
   "form": {
     "title": "填寫資訊",

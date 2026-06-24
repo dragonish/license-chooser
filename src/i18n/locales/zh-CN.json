@@ -156,7 +156,16 @@
     "search": "搜索 ID 或名称",
     "darkModeAuto": "自动",
     "darkModeDark": "深色",
-    "darkModeLight": "浅色"
+    "darkModeLight": "浅色",
+    "about": "关于"
+  },
+  "about": {
+    "title": "关于",
+    "author": "作者",
+    "projectRepo": "项目仓库",
+    "license": "许可证",
+    "dataFrom": "许可证数据来源于",
+    "dataFromLicense": "choosealicense.com 的许可证"
   },
   "form": {
     "title": "填写信息",
