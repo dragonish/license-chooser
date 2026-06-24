@@ -31,6 +31,7 @@ This is an internationalized project.
 - Prefer Quasar components and patterns
 - Check existing files before introducing new structure
 - Do not refactor unrelated code
+- In Vue templates, use kebab-case for component element names (e.g. `<my-component>` not `<MyComponent>`)
 
 ## Verification Rule
 
