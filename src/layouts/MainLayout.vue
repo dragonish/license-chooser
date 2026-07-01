@@ -4,7 +4,9 @@
       <q-toolbar>
         <q-toolbar-title>
           {{ $t("app.title") }}
-          <span class="text-subtitle1">v{{ appVersion }}</span>
+          <q-badge outline align="middle" color="orange">
+            v{{ appVersion }}
+          </q-badge>
         </q-toolbar-title>
 
         <q-btn
