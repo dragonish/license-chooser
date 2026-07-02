@@ -138,10 +138,14 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { useQuasar, copyToClipboard, type QScrollArea } from "quasar";
+import {
+  useQuasar,
+  copyToClipboard,
+  exportFile,
+  type QScrollArea,
+} from "quasar";
 import { useI18n } from "vue-i18n";
 import { useLicenseStore } from "stores/license";
-import { downloadTxt } from "src/utils/download";
 import LicenseCard from "components/LicenseCard.vue";
 import DownloadDialog from "components/DownloadDialog.vue";
 import FilterComponent from "components/FilterComponent.vue";
@@ -247,7 +251,7 @@ async function onSubmit(id: string, data: Record<string, string>) {
     content = content.replaceAll(`<${key}>`, value);
   }
 
-  downloadTxt("LICENSE", content);
+  exportFile("LICENSE.txt", content, "text/plain;charset=utf-8");
   $q.notify({
     type: "positive",
     message: t("file.download"),
