@@ -138,10 +138,9 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { useQuasar, type QScrollArea } from "quasar";
+import { useQuasar, copyToClipboard, type QScrollArea } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useLicenseStore } from "stores/license";
-import { copy } from "src/utils/copy";
 import { downloadTxt } from "src/utils/download";
 import LicenseCard from "components/LicenseCard.vue";
 import DownloadDialog from "components/DownloadDialog.vue";
@@ -205,14 +204,15 @@ async function onDownload(id: string) {
 }
 
 async function onCopy(value: string) {
-  const res = await copy(value);
-  if (res) {
+  try {
+    await copyToClipboard(value);
+
     $q.notify({
       type: "positive",
       message: t("app.copySuccess"),
       caption: value,
     });
-  } else {
+  } catch {
     $q.notify({
       type: "negative",
       message: t("app.copyFail"),
